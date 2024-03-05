@@ -6,45 +6,7 @@ from torch.optim.lr_scheduler import LRScheduler
 import warnings
 
 class LogAnnealingLR(LRScheduler):
-    r"""Set the learning rate of each parameter group using a cosine annealing
-    schedule, where :math:`\eta_{max}` is set to the initial lr and
-    :math:`T_{cur}` is the number of epochs since the last restart in SGDR:
-
-    .. math::
-\begin{equation}
-    \eta_t = \eta^{i}_{min} + \frac{1}{2} \left( \eta^{i}_{max} - \eta^{i}_{min}\right) 
-    \left( 1 + \log_{\underset{}{}\underset{\eta_j \in \eta^{i}_{min}}{\max}}(\frac{T_{i}}{T_{cur}} \pi) \right)
-\end{equation}
-
-    When last_epoch=-1, sets initial lr as lr. Notice that because the schedule
-    is defined recursively, the learning rate can be simultaneously modified
-    outside this scheduler by other operators. If the learning rate is set
-    solely by this scheduler, the learning rate at each step becomes:
-
-    .. math::
-        \eta_t = \eta_{min} + \frac{1}{2}(\eta_{max} - \eta_{min})\left(1 +
-        \cos\left(\frac{T_{cur}}{T_{max}}\pi\right)\right)
-
-    It has been proposed in
-    `SGDR: Stochastic Gradient Descent with Warm Restarts`_. Note that this only
-    implements the cosine annealing part of SGDR, and not the restarts.
-
-    Args:
-        optimizer (Optimizer): Wrapped optimizer.
-        T_max (int): Maximum number of iterations.
-        eta_min (float): Minimum learning rate. Default: 0.
-        last_epoch (int): The index of last epoch. Default: -1.
-        verbose (bool): If ``True``, prints a message to stdout for
-            each update. Default: ``False``.
-
-            .. deprecated:: 2.2
-                ``verbose`` is deprecated. Please use ``get_last_lr()`` to access the
-                learning rate.
-
-    .. _SGDR\: Stochastic Gradient Descent with Warm Restarts:
-        https://arxiv.org/abs/1608.03983
-    """
-
+    
     def __init__(self, optimizer, T_max, eta_min=0, last_epoch=-1, verbose="deprecated"):
         self.T_max = T_max
         self.eta_min = eta_min
